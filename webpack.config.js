@@ -2,6 +2,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
 module.exports = {
+    devServer: {
+        port: 3002
+    },
+    output: {
+        publicPath: "http://localhost:3002/"
+    },
     module: {
         rules: [
             {
@@ -12,28 +18,20 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
-            },
-            {
-                test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
-                loader: 'file-loader'
             }
         ]
     },
     plugins: [
         new ModuleFederationPlugin({
-            //   name: "app_one_remote",
-            //   remotes: {
-            //     app_two: "app_two_remote",
-            //     app_three: "app_three_remote"
-            //   },
-            //   exposes: {
-            //     'AppContainer':'./src/App'
-            //   },
-            //   shared: ["react", "react-dom","react-router-dom"]
+            name: "images_remote",
+            filename: "remoteEntry.js",
+            exposes: {
+                './App': "./src/components/App"
+            },
+            shared: { react: { singleton: true }, "react-dom": { singleton: true } }
         }),
         new HtmlWebpackPlugin({
-            template: "./public/index.html",
-            chunks: ["main"]
+            template: "./public/index.html"
         })
     ]
 }
