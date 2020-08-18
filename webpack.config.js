@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
 module.exports = {
+    mode: "development",
     devServer: {
         port: 3002
     },
@@ -24,6 +25,7 @@ module.exports = {
     plugins: [
         new ModuleFederationPlugin({
             name: "images_remote",
+            library: { type: "var", name: "images_remote" },
             filename: "remoteEntry.js",
             exposes: {
                 './App': "./src/components/App"
