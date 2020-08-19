@@ -4,7 +4,7 @@
   "description": "Remote microfrontend for fetching images",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server",
     "build": "webpack --mode production"
   },
   "author": "",
